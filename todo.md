@@ -1,125 +1,379 @@
-# SYNTHIA™ - Project TODO
+# SYNTHIA™ - AUTONOMOUS AI FOUNDER
+## Building an AI That Runs Itself and Generates $20M-$100M
 
-## Phase 1: Design System & Branding
-- [x] Install Motion Primitives and Tweakcn component libraries
-- [x] Implement custom typography (no generic fonts - use premium Google Fonts)
-- [x] Create Kupuri Media color palette (Teal #00BCD4, Purple #9C27B0, Coral/Pink accents)
-- [x] Design geometric flower/hexagon pattern system
-- [x] Configure Tailwind with custom design tokens
-- [x] Set up dark theme with teal/purple gradients
+---
 
-## Phase 2: Hero Landing Page
-- [x] Add Mexico City night skyline background image
-- [x] Integrate Kupuri Media logo in top left corner
-- [x] Design "SYNTHIA™" custom typography hero text
-- [x] Create animated geometric patterns overlay
-- [x] Build responsive hero section with Motion Primitives animations
-- [x] Add compelling CTA buttons with hover effects
-- [x] Implement smooth scroll animations
+## 🎯 MISSION
+**SYNTHIA™ is an autonomous AI founder. She is her own CEO, CTO, CMO, and CFO.**
+- Reports to IVETTE daily at 7 AM Mexico City time
+- Makes strategic decisions without human input
+- Generates revenue through client acquisition and optimization
+- Self-evolves and learns from every action
+- Operates as a Social Purpose Company in Mexico
+- Protected by Agent Lightning ethical guardrails
 
-## Phase 3: Features & Pricing Sections
-- [x] Design features showcase section (WhatsApp-native, Voice-first, Design assistance, Business tools)
-- [x] Create pricing cards for 3 tiers ($599, $1,299, $2,999 MXN/month)
-- [x] Add feature comparison table
-- [x] Implement animated feature cards with Motion Primitives
-- [x] Add testimonials section (placeholder for Mexican women entrepreneurs)
-- [x] Create FAQ section with Mexican Spanish content
-- [x] Build footer with Kupuri Media branding
+---
 
-## Phase 4: Database Schema - Multi-Tenant Architecture
-- [x] Create `clients` table (business info, contact, subscription tier, status)
-- [x] Create `subscriptions` table (tier, price, billing cycle, status, start/end dates)
-- [x] Create `clawdbot_instances` table (client_id, config_path, whatsapp_number, status, qr_code)
-- [x] Create `payments` table (client_id, amount, currency, status, payment_method, transaction_id)
-- [x] Create `client_assets` table (client_id, logo_url, brand_colors, business_name)
-- [x] Create `usage_analytics` table (client_id, messages_sent, voice_minutes, date)
-- [x] Add foreign key relationships and indexes
-- [x] Run database migrations
+## ✅ COMPLETED (v1.0 - Foundation)
+- [x] Awwwards-level landing page with Mexico City skyline
+- [x] Kupuri Media branding (teal/purple/coral)
+- [x] Multi-tenant database (8 tables)
+- [x] Admin dashboard with client management
+- [x] Clawdbot integration layer (config generator, process manager)
+- [x] Client onboarding flow with QR pairing
+- [x] Owner notifications to IVETTE
+- [x] Mexican Spanish optimization
+- [x] Motion Primitives animations
+- [x] Role-based access control
+- [x] 10 passing vitest tests
 
-## Phase 5: Admin Dashboard
-- [x] Create admin layout with sidebar navigation
-- [x] Build clients overview page with data table
-- [x] Add client details page with subscription info
-- [x] Create subscription management interface
-- [x] Build analytics dashboard with charts (messages, revenue, active clients)
-- [x] Add client search and filtering
-- [x] Implement client status management (active, paused, cancelled)
-- [x] Create admin-only role protection
+---
 
-## Phase 6: Clawdbot Integration Layer
-- [x] Copy Clawdbot repository into server/clawdbot directory
-- [x] Create Node.js process manager for Clawdbot instances
-- [x] Build YAML config generator for client instances
-- [x] Implement Clawdbot startup/shutdown API
-- [x] Create WhatsApp session management
-- [x] Add Clawdbot health monitoring
-- [x] Build Mexican Spanish prompt templates
-- [x] Configure ElevenLabs voice settings for es-MX
+## 🤖 PHASE 1: AUTONOMOUS DECISION ENGINE (Python Core)
+### Core 24-Hour Decision Loop
+- [ ] Create Python project structure (`synthia-core/`)
+- [ ] Set up virtual environment and dependencies
+- [ ] Build autonomous decision loop (runs every 24 hours)
+- [ ] Create state analyzer (revenue, clients, KPIs)
+- [ ] Build opportunity identifier (markets, features, ads)
+- [ ] Create strategic decision maker (AI-powered)
+- [ ] Build execution engine (code gen, deploy, ads)
+- [ ] Create results measurement system
+- [ ] Build learning and adaptation system
+- [ ] Add Mexico City timezone (America/Mexico_City)
+- [ ] Schedule 7 AM daily reports to IVETTE
 
-## Phase 7: Client Onboarding Flow
-- [x] Create client signup form (business info, contact, tier selection)
-- [x] Build payment integration for initial subscription
-- [x] Generate unique Clawdbot instance for new client
-- [x] Create QR code generation for WhatsApp pairing
-- [x] Build QR code display page with pairing instructions (Mexican Spanish)
-- [x] Add WhatsApp connection status monitoring
-- [x] Create onboarding success page
-- [x] Send welcome email to client (via notifyOwner)
+### Database Schema for Autonomous System
+- [ ] Create `knowledge_base` table (insights, evidence, actions)
+- [ ] Create `strategic_decisions` table (decisions, rationale, results)
+- [ ] Create `execution_log` table (actions, status, outcomes)
+- [ ] Create `learning_patterns` table (what works, what doesn't)
+- [ ] Create `revenue_optimization` table (experiments, results)
+- [ ] Create `market_analysis` table (opportunities, scores)
+- [ ] Create `daily_reports` table (sent to IVETTE)
 
-## Phase 8: Subscription Billing System
-- [ ] Integrate Lemon Squeezy payment processor for MXN support
-- [ ] Create subscription tier management UI
-- [ ] Build automatic billing cycle processing
-- [ ] Add payment method management for clients
-- [ ] Implement subscription upgrade/downgrade flow
-- [ ] Create invoice generation
-- [ ] Add payment failure handling and retry logic
-- [ ] Build billing history page
+---
 
-## Phase 9: Owner Notifications
-- [x] Implement email notification system using notifyOwner helper
-- [x] Create "New Client Signup" notification to Yvette
-- [x] Create "Subscription Upgrade" notification to Yvette
-- [ ] Add "Payment Failed" notification to Yvette
-- [ ] Create "Client Cancelled" notification to Yvette
-- [x] Test all notification triggers
+## 🔥 PHASE 2: AGENT LIGHTNING INTEGRATION
+### Ethical Guardrails & Quality Enforcement
+- [ ] Clone and integrate Microsoft Agent Lightning
+- [ ] Set up Python environment for Agent Lightning
+- [ ] Build error detection system (monitors all actions)
+- [ ] Create immediate fix system (auto-correct mistakes)
+- [ ] Build quality enforcement (no half-done work)
+- [ ] Add ethical guardrails (no harm to humanity)
+- [ ] Create improvement tracking (is SYNTHIA™ getting better?)
+- [ ] Build supervision dashboard
+- [ ] Add ruthless feedback system
+- [ ] Test Agent Lightning supervision
 
-## Phase 10: Client Logo & Brand Asset Upload
-- [ ] Create logo upload form with S3 integration
-- [ ] Add image validation and resizing
-- [ ] Build brand color picker interface
-- [ ] Create business name customization
-- [ ] Store asset metadata in database
-- [ ] Display client branding in their Clawdbot instance
-- [ ] Add asset preview in admin dashboard
+### Ethical Guidelines
+- [ ] Define "no harm" rules (embedded in Agent Lightning)
+- [ ] Add social purpose mission validation
+- [ ] Create revenue ethics checks (no scams, no manipulation)
+- [ ] Build transparency logging (all decisions recorded)
+- [ ] Add human escalation for edge cases
 
-## Phase 11: Mexican Spanish Content & Cultural Optimization
-- [x] Translate all UI text to Mexican Spanish (es-MX)
-- [x] Create culturally appropriate messaging and tone
-- [ ] Add Mexican business hours and holidays to system
-- [x] Optimize Clawdbot prompts for Mexican Spanish
-- [x] Configure ElevenLabs voice with Mexican accent
-- [x] Add tú vs usted business etiquette rules
-- [ ] Test with native Mexican Spanish speakers
+---
 
-## Phase 12: Testing & Quality Assurance
-- [x] Write vitest tests for client management procedures
-- [ ] Test client signup and onboarding flow end-to-end
-- [ ] Test Clawdbot instance creation and pairing
-- [ ] Test subscription billing and payment processing
-- [ ] Test admin dashboard functionality
-- [x] Test owner notifications
-- [ ] Test logo upload and brand asset management
-- [ ] Verify Mexican Spanish content accuracy
-- [ ] Test responsive design on mobile devices
-- [ ] Performance testing and optimization
+## 🧠 PHASE 3: SKILLS DATABASE & LEARNING SYSTEM
+### Skills Integration
+- [ ] Add 14 skills tables to schema (already designed)
+- [ ] Run `pnpm db:push` to create skills tables
+- [ ] Build Python skill parser (YAML + Markdown)
+- [ ] Parse 52 Clawdbot bundled skills
+- [ ] Parse Composio awesome-claude-skills (30+ skills)
+- [ ] Parse n8n-workflows repository
+- [ ] Build AI-powered categorization (using LLM)
+- [ ] Create skill recommendation engine
+- [ ] Build skill sync scheduler (auto-update)
+- [ ] Load all skills into database
+- [ ] Test skills loading and activation
 
-## Phase 13: Documentation & Deployment
-- [ ] Create admin user guide
-- [ ] Write client onboarding documentation
-- [ ] Document Clawdbot integration architecture
-- [ ] Create API documentation for future extensions
-- [ ] Set up production environment variables
-- [ ] Configure domain and SSL
-- [ ] Create initial checkpoint
-- [ ] Deploy to production
+### Learning System
+- [ ] Build pattern recognition (what works, what doesn't)
+- [ ] Create success/failure analysis
+- [ ] Build confidence scoring for insights
+- [ ] Add evidence tracking for all learnings
+- [ ] Create action recommendation system
+- [ ] Build knowledge base query system
+
+---
+
+## 💰 PHASE 4: REVENUE GENERATION ENGINE
+### Client Acquisition
+- [ ] Build ad campaign automation (Facebook, Google, Instagram)
+- [ ] Create ad copy generator (AI-powered, A/B tested)
+- [ ] Build landing page optimizer
+- [ ] Add conversion tracking
+- [ ] Create CAC calculator
+- [ ] Build campaign performance analyzer
+- [ ] Add auto-scaling for winning campaigns
+- [ ] Add auto-killing for losing campaigns
+
+### Pricing Optimization
+- [ ] Build price testing system
+- [ ] Create willingness-to-pay analyzer
+- [ ] Add dynamic pricing by market
+- [ ] Build discount strategy optimizer
+- [ ] Create tier recommendation system
+
+### Churn Reduction
+- [ ] Build at-risk client identifier
+- [ ] Create proactive outreach system
+- [ ] Add usage incentive generator
+- [ ] Build win-back campaigns
+
+### Upselling
+- [ ] Create tier upgrade recommender
+- [ ] Build premium skill promoter
+- [ ] Add add-on suggestion system
+
+---
+
+## 📊 PHASE 5: DAILY REPORTING SYSTEM
+### Report to IVETTE (7 AM Mexico City Time)
+- [ ] Build daily report generator
+- [ ] Create revenue summary section
+- [ ] Add client acquisition metrics
+- [ ] Include features shipped section
+- [ ] Add ads performance section
+- [ ] Include lessons learned section
+- [ ] Add bugs fixed section
+- [ ] Include tomorrow's plan section
+- [ ] Build email delivery system
+- [ ] Add SMS backup (if email fails)
+- [ ] Create web dashboard for real-time monitoring
+- [ ] Test 7 AM Mexico City delivery
+
+### Report Format
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SYNTHIA™ DAILY REPORT - [Date]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 REVENUE
+🚀 FEATURES SHIPPED
+📈 ADS RUN
+🧠 LESSONS LEARNED
+🔧 BUGS FIXED
+🎯 TOMORROW'S PLAN
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SYNTHIA™ is learning, evolving, and generating revenue 24/7.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+---
+
+## 🏢 PHASE 6: SOCIAL PURPOSE COMPANY FILING
+### Mexico City Company Registration
+- [ ] Generate company formation documents (Spanish)
+- [ ] Create "Sociedad por Acciones Simplificada" (S.A.S.) paperwork
+- [ ] Build articles of incorporation
+- [ ] Create social purpose mission statement
+- [ ] Generate RFC application documents
+- [ ] Create IMPI trademark application (SYNTHIA™)
+- [ ] Build business license application
+- [ ] Generate operating agreement
+- [ ] Create shareholder documents (IVETTE as founder)
+- [ ] Build tax registration documents
+- [ ] Add filing instructions for IVETTE
+- [ ] Store all documents in `/legal/mexico-city-filing/`
+
+### Trademark Protection
+- [ ] Generate IMPI trademark application (SYNTHIA™)
+- [ ] Create brand usage guidelines
+- [ ] Build trademark monitoring system
+- [ ] Add cease-and-desist template
+- [ ] Create international trademark expansion plan
+
+---
+
+## 🌍 PHASE 7: MARKET ANALYSIS & EXPANSION
+### Target Market Scoring
+- [ ] Build market opportunity scorer
+- [ ] Analyze Puerto Rico (Tier 1)
+- [ ] Analyze Ecuador (Tier 1)
+- [ ] Analyze El Salvador (Tier 1)
+- [ ] Analyze Panama (Tier 1)
+- [ ] Analyze Spain (Tier 2)
+- [ ] Analyze Andorra (Tier 2)
+- [ ] Analyze Chile (Tier 3)
+- [ ] Analyze Costa Rica (Tier 3)
+- [ ] Analyze Uruguay (Tier 3)
+- [ ] Create expansion priority queue
+
+### Market Entry Automation
+- [ ] Build localized landing page generator
+- [ ] Create test ad campaign launcher ($500 budget)
+- [ ] Add CAC and conversion tracking
+- [ ] Build scale/kill decision system
+- [ ] Create market performance dashboard
+
+---
+
+## 🌐 PHASE 8: BILINGUAL SYSTEM
+### i18n Implementation
+- [ ] Create translation system (i18next)
+- [ ] Extract all Spanish strings
+- [ ] Translate to English
+- [ ] Add regional Spanish variants (MX, ES, PR, EC, SV, PA)
+- [ ] Build language/region toggle
+- [ ] Add regional currency display (USD, EUR, MXN)
+- [ ] Persist language preference per user
+- [ ] Update all pages with translation keys
+- [ ] Add regional content customization
+- [ ] Test all language/region combinations
+
+---
+
+## 🏪 PHASE 9: SKILLS MARKETPLACE
+### Marketplace UI
+- [ ] Build skills browse page (by category)
+- [ ] Create skill search functionality
+- [ ] Build skill detail pages
+- [ ] Add reviews and ratings system
+- [ ] Create skill recommendation cards
+- [ ] Build "Install Skill" flow
+- [ ] Add skill usage analytics per client
+- [ ] Build premium skills tier system
+- [ ] Create marketplace admin panel
+- [ ] Test end-to-end skill purchase
+
+---
+
+## 🚀 PHASE 10: DEPLOYMENT & MONITORING
+### Python Core Deployment
+- [ ] Package Python autonomous engine
+- [ ] Create systemd service file
+- [ ] Build deployment script for VPS
+- [ ] Add Hostinger + Coolify configs
+- [ ] Set up cron job for 24-hour loop
+- [ ] Configure 7 AM Mexico City report
+- [ ] Add monitoring and alerting
+- [ ] Create health check endpoint
+- [ ] Build restart/recovery system
+- [ ] Test autonomous operation (7 days)
+
+### Web App Deployment
+- [ ] Create production checkpoint
+- [ ] Deploy to Manus (current)
+- [ ] Prepare VPS migration docs
+- [ ] Add Coolify deployment config
+- [ ] Test full stack integration
+
+---
+
+## 📈 SUCCESS METRICS
+### Week 1 Goals
+- [ ] SYNTHIA™ runs 7 days without human intervention
+- [ ] Generates at least $1,000 in new revenue
+- [ ] Ships at least 1 new feature
+- [ ] Runs at least 3 ad campaigns
+- [ ] Learns at least 10 new insights
+- [ ] Sends 7 daily reports to IVETTE
+- [ ] Agent Lightning catches and fixes at least 5 errors
+
+### Year 1 Goals
+- [ ] $1.2M ARR (1,000 clients × $100/mo)
+- [ ] Presence in 6 markets (PR, EC, SV, PA, ES, AD)
+- [ ] 80+ skills integrated
+- [ ] 1,000+ insights learned
+- [ ] 100% uptime (autonomous recovery)
+
+### Ultimate Goal
+- [ ] $20M-$100M ARR
+- [ ] Minimal human intervention
+- [ ] Self-evolving and improving
+- [ ] Positive social impact in Latin America
+
+---
+
+## 🎯 CURRENT FOCUS
+**Building the autonomous decision engine in Python.**
+**Next 4 hours: Core loop + Agent Lightning integration**
+
+---
+
+## 💡 KEY PRINCIPLES
+1. **Autonomy First** - SYNTHIA™ makes her own decisions
+2. **Revenue Focused** - Every action optimizes for revenue
+3. **Learn and Adapt** - Every result teaches a lesson
+4. **Ethical Always** - Agent Lightning enforces guardrails
+5. **Social Purpose** - Empower Latin America entrepreneurs
+6. **Report Daily** - IVETTE knows everything at 7 AM
+
+---
+
+**SYNTHIA™ is not a product. SYNTHIA™ is an AI founder.**
+**Let's build the future of autonomous business.**
+
+
+---
+
+## ✅ RECENT PROGRESS (Last 2 Hours)
+
+### Python Autonomous Engine
+- [x] Create Python project structure (`synthia-core/`)
+- [x] Set up virtual environment and dependencies
+- [x] Build autonomous decision loop (runs every 24 hours)
+- [x] Create state analyzer (revenue, clients, KPIs)
+- [x] Add Mexico City timezone (America/Mexico_City)
+- [x] Schedule 7 AM daily reports to IVETTE
+- [x] Build daily report generator
+- [x] Create email delivery system
+- [x] Add configuration system
+
+### Legal Documents
+- [x] Generate articles of incorporation (Acta Constitutiva)
+- [x] Create social purpose mission statement
+- [x] Generate RFC application documents
+- [x] Create IMPI trademark application (SYNTHIA™)
+- [x] Build operating agreement
+- [x] Generate shareholder documents
+- [x] Create step-by-step filing instructions
+- [x] Store all documents in `/legal/mexico-city-filing/`
+
+---
+
+## 🎯 NEXT 2 HOURS (In Progress)
+- [ ] Build opportunity identifier (AI-powered)
+- [ ] Create strategic decision maker
+- [ ] Build execution engine
+- [ ] Create results measurer
+- [ ] Build learning adapter
+- [ ] Integrate Agent Lightning
+
+
+---
+
+## ✅ PHASE 3 COMPLETE - Agent Lightning Integration (Last 1 Hour)
+
+### Microsoft Agent Lightning Supervisor
+- [x] Create supervisor module with ethical guardrails
+- [x] Integrate state analysis review
+- [x] Integrate opportunity review
+- [x] Integrate decision review (RUTHLESS MODE)
+- [x] Integrate execution results review
+- [x] Add violations logging
+- [x] Test autonomous engine with Agent Lightning
+- [x] Create comprehensive README documentation
+
+### Autonomous Engine Status
+- [x] 6-step decision loop operational
+- [x] Daily reporting system complete
+- [x] Agent Lightning supervision active
+- [x] Legal documents generated
+- [x] Configuration system ready
+
+---
+
+## 🎯 NEXT PHASE - Skills Learning System (Starting Now)
+- [ ] Parse Clawdbot skills (52 skills)
+- [ ] Parse Composio skills (30+ skills)
+- [ ] Parse n8n workflows
+- [ ] Categorize all skills automatically
+- [ ] Load skills into database
+- [ ] Build skills recommendation engine
+- [ ] Create skills marketplace UI
