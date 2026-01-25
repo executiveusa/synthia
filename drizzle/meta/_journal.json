@@ -15,6 +15,20 @@
       "when": 1769311727829,
       "tag": "0001_wild_madame_hydra",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1769326208147,
+      "tag": "0002_colorful_midnight",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1769326224754,
+      "tag": "0003_graceful_wraith",
+      "breakpoints": true
     }
   ]
 }

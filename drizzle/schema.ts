@@ -121,6 +121,37 @@ export const notificationLog = mysqlTable("notification_log", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+// Skills marketplace tables
+export const skills = mysqlTable("skills", {
+  id: int("id").autoincrement().primaryKey(),
+  source: mysqlEnum("source", ["clawdbot", "composio", "n8n", "custom"]).notNull(),
+  skillId: varchar("skillId", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  category: varchar("category", { length: 100 }).notNull(),
+  subcategory: varchar("subcategory", { length: 100 }),
+  requirements: json("requirements").$type<string[]>(),
+  config: json("config").$type<Record<string, any>>(),
+  metadata: json("metadata").$type<Record<string, any>>(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+// Client-activated skills
+export const clientSkills = mysqlTable("client_skills", {
+  id: int("id").autoincrement().primaryKey(),
+  clientId: int("clientId").notNull().references(() => clients.id, { onDelete: "cascade" }),
+  skillId: int("skillId").notNull().references(() => skills.id, { onDelete: "cascade" }),
+  isEnabled: boolean("isEnabled").default(true).notNull(),
+  config: json("config").$type<Record<string, any>>(),
+  usageCount: int("usageCount").default(0).notNull(),
+  lastUsedAt: timestamp("lastUsedAt"),
+  activatedAt: timestamp("activatedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
 // Type exports
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
@@ -145,3 +176,10 @@ export type InsertUsageAnalytic = typeof usageAnalytics.$inferInsert;
 
 export type NotificationLog = typeof notificationLog.$inferSelect;
 export type InsertNotificationLog = typeof notificationLog.$inferInsert;
+
+
+export type Skill = typeof skills.$inferSelect;
+export type InsertSkill = typeof skills.$inferInsert;
+
+export type ClientSkill = typeof clientSkills.$inferSelect;
+export type InsertClientSkill = typeof clientSkills.$inferInsert;
