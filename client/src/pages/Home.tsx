@@ -1,8 +1,12 @@
 import { Link } from "wouter";
 import { Sparkles, MessageCircle, Mic, Palette, Briefcase, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       {/* Kupuri Media Logo - Top Left */}
@@ -12,6 +16,11 @@ export default function Home() {
           alt="Kupuri Media" 
           className="h-12 w-auto opacity-90 hover:opacity-100 transition-opacity"
         />
+      </div>
+
+      {/* Language Toggle - Top Right */}
+      <div className="absolute top-6 right-6 z-50">
+        <LanguageToggle />
       </div>
 
       {/* Hero Section */}
@@ -36,23 +45,21 @@ export default function Home() {
           <div className="mb-6 flex items-center justify-center gap-3">
             <h1 className="text-7xl md:text-9xl font-bold tracking-tight">
               <span className="synthia-text">
-                SYNTH
-                <span className="ia-shimmer">IA</span>
+                {t('hero.title')}
+                <span className="ia-shimmer">{t('hero.ia')}</span>
               </span>
-              <span className="tm-symbol">™</span>
+              <span className="tm-symbol">{t('hero.tm')}</span>
             </h1>
           </div>
 
           {/* Tagline */}
           <p className="text-2xl md:text-3xl text-cyan-300/90 mb-4 font-light tracking-wide">
-            Tu Asistente de IA por WhatsApp
+            {t('hero.subtitle')}
           </p>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-slate-300/80 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Potencia tu negocio con inteligencia artificial que habla, escucha y entiende.
-            <br />
-            <span className="text-cyan-400">Diseñado para emprendedoras mexicanas.</span>
+            {t('hero.description')}
           </p>
 
           {/* CTA Buttons */}
@@ -62,7 +69,7 @@ export default function Home() {
                 size="lg" 
                 className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-8 py-6 text-lg font-semibold rounded-full shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 transform hover:scale-105"
               >
-                Comenzar Ahora
+                {t('hero.cta.primary')}
                 <Sparkles className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -72,7 +79,7 @@ export default function Home() {
                 variant="outline" 
                 className="border-2 border-cyan-400/50 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400 px-8 py-6 text-lg font-semibold rounded-full transition-all duration-300"
               >
-                Ver Demostración
+                {t('hero.cta.secondary')}
               </Button>
             </Link>
           </div>
@@ -86,189 +93,178 @@ export default function Home() {
 
           {/* Kupuri Media Attribution */}
           <div className="absolute bottom-8 left-0 right-0 flex items-center justify-center gap-2 text-slate-400/60 text-sm">
-            <span>Desarrollado por</span>
+            <span>{t('footer.built')}</span>
             <img src="/kupuri-logo.png" alt="Kupuri Media Studios" className="h-6 w-auto opacity-60" />
-            <span className="font-medium">Kupuri Media Studios</span>
+            <span className="font-medium">{t('footer.company')}</span>
           </div>
         </div>
 
         {/* Descubre más text */}
         <div className="absolute bottom-24 left-0 right-0 text-center">
-          <p className="text-slate-400/70 text-sm tracking-widest uppercase">Descubre más</p>
+          <p className="text-slate-400/70 text-sm tracking-widest uppercase">{t('hero.scroll')}</p>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="relative py-24 bg-gradient-to-b from-slate-950 to-slate-900">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-            Características Principales
-          </h2>
+      <section className="relative py-24 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">
+              {t('features.title')}
+            </h2>
+            <p className="text-xl text-slate-400">
+              {t('features.subtitle')}
+            </p>
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Feature 1 */}
-            <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <MessageCircle className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">WhatsApp Nativo</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Integración perfecta con WhatsApp. Tus clientes te contactan como siempre, pero con IA respondiendo 24/7.
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* WhatsApp Feature */}
+            <div className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
+              <div className="mb-4 w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-cyan-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <MessageCircle className="w-7 h-7 text-white" />
               </div>
+              <h3 className="text-xl font-bold mb-3">{t('features.whatsapp.title')}</h3>
+              <p className="text-slate-400">{t('features.whatsapp.description')}</p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Mic className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Voz en Español</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Mensajes de voz en español mexicano natural. Tus clientes pueden hablar y recibir respuestas por voz.
-                </p>
+            {/* Voice Feature */}
+            <div className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 hover:border-secondary transition-all duration-300 hover:shadow-lg hover:shadow-secondary/20">
+              <div className="mb-4 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Mic className="w-7 h-7 text-white" />
               </div>
+              <h3 className="text-xl font-bold mb-3">{t('features.voice.title')}</h3>
+              <p className="text-slate-400">{t('features.voice.description')}</p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-rose-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Palette className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Asistencia de Diseño</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Ayuda con colores, branding, layouts y diseño visual para tu negocio. IA creativa a tu servicio.
-                </p>
+            {/* Design Feature */}
+            <div className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/20">
+              <div className="mb-4 w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Palette className="w-7 h-7 text-white" />
               </div>
+              <h3 className="text-xl font-bold mb-3">{t('features.design.title')}</h3>
+              <p className="text-slate-400">{t('features.design.description')}</p>
             </div>
 
-            {/* Feature 4 */}
-            <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Briefcase className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Herramientas de Negocio</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Gestión de citas, seguimiento de clientes, generación de leads y más. Todo desde WhatsApp.
-                </p>
+            {/* Business Feature */}
+            <div className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
+              <div className="mb-4 w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Briefcase className="w-7 h-7 text-white" />
               </div>
+              <h3 className="text-xl font-bold mb-3">{t('features.business.title')}</h3>
+              <p className="text-slate-400">{t('features.business.description')}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="relative py-24 bg-gradient-to-b from-slate-900 to-slate-950">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-            Planes y Precios
-          </h2>
-          <p className="text-center text-slate-400 mb-16 text-lg">
-            Elige el plan perfecto para tu negocio
-          </p>
+      <section className="relative py-24 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">
+              {t('pricing.title')}
+            </h2>
+            <p className="text-xl text-slate-400">
+              {t('pricing.subtitle')}
+            </p>
+          </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Basic Plan */}
-            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-300">
-              <h3 className="text-2xl font-bold text-white mb-2">Básico</h3>
+            <div className="relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 hover:border-primary transition-all duration-300">
+              <h3 className="text-2xl font-bold mb-2">{t('pricing.basic.name')}</h3>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-cyan-400">$599</span>
-                <span className="text-slate-400 ml-2">MXN/mes</span>
+                <span className="text-5xl font-bold text-gradient">{t('pricing.basic.price')}</span>
+                <span className="text-slate-400">{t('pricing.basic.period')}</span>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">1,000 mensajes/mes</span>
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.basic.feature1')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Respuestas de texto</span>
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.basic.feature2')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Soporte por email</span>
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.basic.feature3')}</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.basic.feature4')}</span>
                 </li>
               </ul>
               <Link href="/onboarding">
-                <Button className="w-full bg-slate-700 hover:bg-slate-600 text-white">
-                  Comenzar
+                <Button className="w-full" variant="outline">
+                  {t('pricing.basic.cta')}
                 </Button>
               </Link>
             </div>
 
-            {/* Professional Plan (Popular) */}
-            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border-2 border-cyan-500/50 hover:border-cyan-500 transition-all duration-300 transform scale-105">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                  Más Popular
-                </span>
+            {/* Professional Plan (Most Popular) */}
+            <div className="relative bg-card/50 backdrop-blur-sm border-2 border-primary rounded-2xl p-8 transform scale-105 shadow-lg shadow-primary/20">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-6 py-1 rounded-full text-sm font-semibold">
+                {t('pricing.pro.badge')}
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Profesional</h3>
+              <h3 className="text-2xl font-bold mb-2">{t('pricing.pro.name')}</h3>
               <div className="mb-6">
-                <span className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">$1,299</span>
-                <span className="text-slate-400 ml-2">MXN/mes</span>
+                <span className="text-5xl font-bold text-gradient">{t('pricing.pro.price')}</span>
+                <span className="text-slate-400">{t('pricing.pro.period')}</span>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">5,000 mensajes/mes</span>
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.pro.feature1')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Mensajes de voz</span>
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.pro.feature2')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Asistencia de diseño</span>
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.pro.feature3')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Soporte prioritario</span>
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.pro.feature4')}</span>
                 </li>
               </ul>
               <Link href="/onboarding">
-                <Button className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white">
-                  Comenzar
+                <Button className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700">
+                  {t('pricing.pro.cta')}
                 </Button>
               </Link>
             </div>
 
             {/* Enterprise Plan */}
-            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 hover:border-purple-500/50 transition-all duration-300">
-              <h3 className="text-2xl font-bold text-white mb-2">Empresarial</h3>
+            <div className="relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 hover:border-secondary transition-all duration-300">
+              <h3 className="text-2xl font-bold mb-2">{t('pricing.enterprise.name')}</h3>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-purple-400">$2,999</span>
-                <span className="text-slate-400 ml-2">MXN/mes</span>
+                <span className="text-5xl font-bold text-gradient">{t('pricing.enterprise.price')}</span>
+                <span className="text-slate-400">{t('pricing.enterprise.period')}</span>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Mensajes ilimitados</span>
+                  <Check className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.enterprise.feature1')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Todas las funciones</span>
+                  <Check className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.enterprise.feature2')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Personalización completa</span>
+                  <Check className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.enterprise.feature3')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Soporte 24/7</span>
+                  <Check className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                  <span>{t('pricing.enterprise.feature4')}</span>
                 </li>
               </ul>
               <Link href="/onboarding">
-                <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
-                  Comenzar
+                <Button className="w-full" variant="outline">
+                  {t('pricing.enterprise.cta')}
                 </Button>
               </Link>
             </div>
@@ -277,24 +273,54 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="relative py-12 bg-slate-950 border-t border-slate-800">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <img src="/kupuri-logo.png" alt="Kupuri Media Studios" className="h-10 w-auto" />
-              <div>
-                <p className="text-slate-400 text-sm">Desarrollado por</p>
-                <p className="text-white font-semibold">Kupuri Media Studios</p>
+      <footer className="relative border-t border-border py-12 px-4">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            {/* Brand */}
+            <div className="col-span-1">
+              <div className="flex items-center gap-2 mb-4">
+                <img src="/kupuri-logo.png" alt="Kupuri Media" className="h-8 w-auto" />
+                <span className="text-xl font-bold text-gradient">SYNTHIA™</span>
               </div>
-            </div>
-            <div className="text-center md:text-right">
               <p className="text-slate-400 text-sm">
-                © 2026 SYNTHIA™. Todos los derechos reservados.
-              </p>
-              <p className="text-slate-500 text-xs mt-1">
-                Diseñado para emprendedoras mexicanas
+                {t('hero.subtitle')}
               </p>
             </div>
+
+            {/* Product */}
+            <div>
+              <h4 className="font-semibold mb-4">{t('footer.product')}</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                <li><Link href="/skills" className="hover:text-primary transition-colors">{t('footer.features')}</Link></li>
+                <li><Link href="/#pricing" className="hover:text-primary transition-colors">{t('footer.pricing')}</Link></li>
+                <li><Link href="/skills" className="hover:text-primary transition-colors">{t('footer.demo')}</Link></li>
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h4 className="font-semibold mb-4">{t('footer.company_section')}</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                <li><a href="#" className="hover:text-primary transition-colors">{t('footer.about')}</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">{t('footer.contact')}</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">{t('footer.careers')}</a></li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h4 className="font-semibold mb-4">{t('footer.legal')}</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                <li><a href="#" className="hover:text-primary transition-colors">{t('footer.privacy')}</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">{t('footer.terms')}</a></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="pt-8 border-t border-border text-center text-slate-400 text-sm">
+            <p>© 2026 SYNTHIA™. {t('footer.rights')}</p>
+            <p className="mt-2">{t('footer.built')} <span className="text-primary font-semibold">{t('footer.company')}</span></p>
           </div>
         </div>
       </footer>
