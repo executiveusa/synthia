@@ -282,6 +282,70 @@
   }
 }
 
+/* Premium SYNTHIA Typography */
+.synthia-text {
+  font-family: 'General Sans', 'Outfit', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #06b6d4 0%, #a855f7 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  position: relative;
+}
+
+/* IA Shimmer Effect */
+.ia-shimmer {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    #06b6d4 0%,
+    #22d3ee 25%,
+    #a855f7 50%,
+    #22d3ee 75%,
+    #06b6d4 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 200% 0;
+  }
+  50% {
+    background-position: -200% 0;
+  }
+}
+
+/* TM Symbol */
+.tm-symbol {
+  font-size: 0.3em;
+  vertical-align: super;
+  opacity: 0.6;
+  margin-left: 0.1em;
+}
+
+/* Hexagon Pattern */
+.hexagon-pattern {
+  background-image: 
+    linear-gradient(30deg, rgba(0, 188, 212, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(0, 188, 212, 0.05) 87.5%, rgba(0, 188, 212, 0.05)),
+    linear-gradient(150deg, rgba(0, 188, 212, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(0, 188, 212, 0.05) 87.5%, rgba(0, 188, 212, 0.05)),
+    linear-gradient(30deg, rgba(0, 188, 212, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(0, 188, 212, 0.05) 87.5%, rgba(0, 188, 212, 0.05)),
+    linear-gradient(150deg, rgba(0, 188, 212, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(0, 188, 212, 0.05) 87.5%, rgba(0, 188, 212, 0.05)),
+    linear-gradient(60deg, rgba(156, 39, 176, 0.03) 25%, transparent 25.5%, transparent 75%, rgba(156, 39, 176, 0.03) 75%, rgba(156, 39, 176, 0.03)),
+    linear-gradient(60deg, rgba(156, 39, 176, 0.03) 25%, transparent 25.5%, transparent 75%, rgba(156, 39, 176, 0.03) 75%, rgba(156, 39, 176, 0.03));
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  width: 100%;
+  height: 100%;
+}
+
 /* Animation Utilities */
 @layer utilities {
   @keyframes float {

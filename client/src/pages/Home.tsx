@@ -1,417 +1,299 @@
+import { Link } from "wouter";
+import { Sparkles, MessageCircle, Mic, Palette, Briefcase, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { MessageSquare, Mic, Palette, BarChart3, ArrowRight, Sparkles } from "lucide-react";
 
-/**
- * SYNTHIA™ Landing Page
- * Premium AI WhatsApp Assistant for Mexican Women Entrepreneurs
- */
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* Hero Section with Mexico City Background */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/mexico-city-night.jpg')" }}
-          />
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background" />
-          {/* Hexagon pattern overlay */}
-          <div className="absolute inset-0 pattern-hexagon opacity-30" />
-          {/* Radial gradient glow */}
-          <div className="absolute inset-0 gradient-radial-teal" />
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      {/* Kupuri Media Logo - Top Left */}
+      <div className="absolute top-6 left-6 z-50">
+        <img 
+          src="/kupuri-logo.png" 
+          alt="Kupuri Media" 
+          className="h-12 w-auto opacity-90 hover:opacity-100 transition-opacity"
+        />
+      </div>
 
-        {/* Kupuri Media Logo */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="absolute top-8 left-8 z-20"
-        >
-          <img 
-            src="/kupuri-logo.jpg" 
-            alt="Kupuri Media" 
-            className="h-16 w-auto rounded-lg shadow-lg glow-teal"
-          />
-        </motion.div>
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Mexico City Background */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+          style={{ backgroundImage: "url('/mexico-city-night.jpg')" }}
+        />
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/60 to-slate-950/90" />
+        
+        {/* Geometric Hexagon Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="hexagon-pattern" />
+        </div>
 
         {/* Hero Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
-            {/* Sparkle Icon */}
-            <motion.div
-              animate={{ 
-                rotate: [0, 5, -5, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ 
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="inline-block mb-6"
-            >
-              <Sparkles className="w-16 h-16 text-accent animate-pulse-glow" />
-            </motion.div>
-
-            {/* Main Heading */}
-            <h1 className="text-gradient mb-6 font-bold">
-              SYNTHIA™
+          {/* SYNTHIA Logo with Premium Typography */}
+          <div className="mb-6 flex items-center justify-center gap-3">
+            <h1 className="text-7xl md:text-9xl font-bold tracking-tight">
+              <span className="synthia-text">
+                SYNTH
+                <span className="ia-shimmer">IA</span>
+              </span>
+              <span className="tm-symbol">™</span>
             </h1>
+          </div>
 
-            {/* Subheading */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="text-2xl md:text-3xl lg:text-4xl text-muted-foreground mb-4 font-medium"
-            >
-              Tu Asistente de IA por WhatsApp
-            </motion.p>
+          {/* Tagline */}
+          <p className="text-2xl md:text-3xl text-cyan-300/90 mb-4 font-light tracking-wide">
+            Tu Asistente de IA por WhatsApp
+          </p>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.7 }}
-              className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto"
-            >
-              Potencia tu negocio con inteligencia artificial que habla, escucha y entiende.
-              <br />
-              <span className="text-primary font-semibold">Diseñado para emprendedoras mexicanas.</span>
-            </motion.p>
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-slate-300/80 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Potencia tu negocio con inteligencia artificial que habla, escucha y entiende.
+            <br />
+            <span className="text-cyan-400">Diseñado para emprendedoras mexicanas.</span>
+          </p>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            >
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <Link href="/onboarding">
               <Button 
                 size="lg" 
-                className="gradient-teal-purple text-white font-semibold text-lg px-8 py-6 glow-teal hover:scale-105 transition-transform duration-300 group"
-                onClick={() => window.location.href = '/onboarding'}
+                className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-8 py-6 text-lg font-semibold rounded-full shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 transform hover:scale-105"
               >
                 Comenzar Ahora
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <Sparkles className="ml-2 h-5 w-5" />
               </Button>
+            </Link>
+            <Link href="/skills">
               <Button 
                 size="lg" 
-                variant="outline"
-                className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-lg px-8 py-6 transition-all duration-300"
+                variant="outline" 
+                className="border-2 border-cyan-400/50 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400 px-8 py-6 text-lg font-semibold rounded-full transition-all duration-300"
               >
                 Ver Demostración
               </Button>
-            </motion.div>
+            </Link>
+          </div>
 
-            {/* Trust Badge */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.1 }}
-              className="mt-12 text-muted-foreground text-sm"
-            >
-              <p className="flex items-center justify-center gap-2">
-                <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse-glow" />
-                Desarrollado por Kupuri Media para emprendedoras mexicanas
-              </p>
-            </motion.div>
-          </motion.div>
+          {/* Scroll Indicator */}
+          <div className="animate-bounce mt-16">
+            <div className="w-6 h-10 border-2 border-cyan-400/50 rounded-full mx-auto flex items-start justify-center p-2">
+              <div className="w-1 h-3 bg-cyan-400 rounded-full animate-pulse" />
+            </div>
+          </div>
+
+          {/* Kupuri Media Attribution */}
+          <div className="absolute bottom-8 left-0 right-0 flex items-center justify-center gap-2 text-slate-400/60 text-sm">
+            <span>Desarrollado por</span>
+            <img src="/kupuri-logo.png" alt="Kupuri Media Studios" className="h-6 w-auto opacity-60" />
+            <span className="font-medium">Kupuri Media Studios</span>
+          </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-muted-foreground"
-          >
-            <span className="text-sm">Descubre más</span>
-            <div className="w-6 h-10 border-2 border-primary rounded-full flex items-start justify-center p-2">
-              <motion.div
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-1.5 h-1.5 bg-primary rounded-full"
-              />
-            </div>
-          </motion.div>
-        </motion.div>
+        {/* Descubre más text */}
+        <div className="absolute bottom-24 left-0 right-0 text-center">
+          <p className="text-slate-400/70 text-sm tracking-widest uppercase">Descubre más</p>
+        </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-24 relative">
+      <section className="relative py-24 bg-gradient-to-b from-slate-950 to-slate-900">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-gradient mb-4">
-              Características Poderosas
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Todo lo que necesitas para llevar tu negocio al siguiente nivel
-            </p>
-          </motion.div>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            Características Principales
+          </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Feature 1: WhatsApp Native */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 group"
-            >
-              <div className="w-14 h-14 rounded-xl gradient-teal-purple flex items-center justify-center mb-6 glow-teal group-hover:scale-110 transition-transform duration-300">
-                <MessageSquare className="w-7 h-7 text-white" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Feature 1 */}
+            <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <MessageCircle className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-3">WhatsApp Nativo</h3>
+                <p className="text-slate-400 leading-relaxed">
+                  Integración perfecta con WhatsApp. Tus clientes te contactan como siempre, pero con IA respondiendo 24/7.
+                </p>
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-foreground">WhatsApp Nativo</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Conecta directamente con tus clientes en la plataforma que ya usan todos los días.
-              </p>
-            </motion.div>
+            </div>
 
-            {/* Feature 2: Voice First */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-card border border-border rounded-2xl p-8 hover:border-secondary transition-all duration-300 hover:shadow-lg hover:shadow-secondary/20 group"
-            >
-              <div className="w-14 h-14 rounded-xl gradient-purple-coral flex items-center justify-center mb-6 glow-purple group-hover:scale-110 transition-transform duration-300">
-                <Mic className="w-7 h-7 text-white" />
+            {/* Feature 2 */}
+            <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Mic className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-3">Voz en Español</h3>
+                <p className="text-slate-400 leading-relaxed">
+                  Mensajes de voz en español mexicano natural. Tus clientes pueden hablar y recibir respuestas por voz.
+                </p>
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-foreground">Voz en Español</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Habla naturalmente en español mexicano. Tu asistente entiende y responde con voz humana.
-              </p>
-            </motion.div>
+            </div>
 
-            {/* Feature 3: Design Assistant */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-card border border-border rounded-2xl p-8 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 group"
-            >
-              <div className="w-14 h-14 rounded-xl bg-accent flex items-center justify-center mb-6 glow-coral group-hover:scale-110 transition-transform duration-300">
-                <Palette className="w-7 h-7 text-accent-foreground" />
+            {/* Feature 3 */}
+            <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-rose-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Palette className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-3">Asistencia de Diseño</h3>
+                <p className="text-slate-400 leading-relaxed">
+                  Ayuda con colores, branding, layouts y diseño visual para tu negocio. IA creativa a tu servicio.
+                </p>
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-foreground">Asistencia de Diseño</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Crea logos, paletas de colores y materiales de marca profesionales al instante.
-              </p>
-            </motion.div>
+            </div>
 
-            {/* Feature 4: Business Tools */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 group"
-            >
-              <div className="w-14 h-14 rounded-xl gradient-teal-purple flex items-center justify-center mb-6 glow-teal group-hover:scale-110 transition-transform duration-300">
-                <BarChart3 className="w-7 h-7 text-white" />
+            {/* Feature 4 */}
+            <div className="group relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Briefcase className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-3">Herramientas de Negocio</h3>
+                <p className="text-slate-400 leading-relaxed">
+                  Gestión de citas, seguimiento de clientes, generación de leads y más. Todo desde WhatsApp.
+                </p>
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-foreground">Herramientas de Negocio</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Gestiona clientes, agenda citas y automatiza tareas repetitivas sin esfuerzo.
-              </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="py-24 relative bg-card/50">
+      <section className="relative py-24 bg-gradient-to-b from-slate-900 to-slate-950">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-gradient mb-4">
-              Planes Accesibles
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Elige el plan perfecto para tu negocio. Sin sorpresas, sin costos ocultos.
-            </p>
-          </motion.div>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            Planes y Precios
+          </h2>
+          <p className="text-center text-slate-400 mb-16 text-lg">
+            Elige el plan perfecto para tu negocio
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Basic Plan */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="bg-card border-2 border-border rounded-2xl p-8 hover:border-primary transition-all duration-300"
-            >
-              <h3 className="text-2xl font-bold mb-2">Básico</h3>
+            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-300">
+              <h3 className="text-2xl font-bold text-white mb-2">Básico</h3>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-primary">$599</span>
-                <span className="text-muted-foreground ml-2">MXN/mes</span>
+                <span className="text-5xl font-bold text-cyan-400">$599</span>
+                <span className="text-slate-400 ml-2">MXN/mes</span>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-primary/20 flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">1,000 mensajes/mes</span>
+                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">1,000 mensajes/mes</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-primary/20 flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">Respuestas de voz</span>
+                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Respuestas de texto</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-primary/20 flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">Soporte por email</span>
+                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Soporte por email</span>
                 </li>
               </ul>
-              <Button className="w-full" variant="outline">
-                Comenzar
-              </Button>
-            </motion.div>
+              <Link href="/onboarding">
+                <Button className="w-full bg-slate-700 hover:bg-slate-600 text-white">
+                  Comenzar
+                </Button>
+              </Link>
+            </div>
 
-            {/* Professional Plan - Featured */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-card border-2 border-primary rounded-2xl p-8 relative glow-teal transform scale-105"
-            >
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
-                Más Popular
+            {/* Professional Plan (Popular) */}
+            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border-2 border-cyan-500/50 hover:border-cyan-500 transition-all duration-300 transform scale-105">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  Más Popular
+                </span>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Profesional</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">Profesional</h3>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-gradient">$1,299</span>
-                <span className="text-muted-foreground ml-2">MXN/mes</span>
+                <span className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">$1,299</span>
+                <span className="text-slate-400 ml-2">MXN/mes</span>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground font-medium">5,000 mensajes/mes</span>
+                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">5,000 mensajes/mes</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground font-medium">Voz + diseño de marca</span>
+                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Mensajes de voz</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground font-medium">Soporte prioritario</span>
+                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Asistencia de diseño</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground font-medium">Análisis avanzado</span>
+                  <Check className="h-5 w-5 text-cyan-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Soporte prioritario</span>
                 </li>
               </ul>
-              <Button className="w-full gradient-teal-purple text-white font-semibold">
-                Comenzar Ahora
-              </Button>
-            </motion.div>
+              <Link href="/onboarding">
+                <Button className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white">
+                  Comenzar
+                </Button>
+              </Link>
+            </div>
 
             {/* Enterprise Plan */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-card border-2 border-border rounded-2xl p-8 hover:border-secondary transition-all duration-300"
-            >
-              <h3 className="text-2xl font-bold mb-2">Empresarial</h3>
+            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 hover:border-purple-500/50 transition-all duration-300">
+              <h3 className="text-2xl font-bold text-white mb-2">Empresarial</h3>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-secondary">$2,999</span>
-                <span className="text-muted-foreground ml-2">MXN/mes</span>
+                <span className="text-5xl font-bold text-purple-400">$2,999</span>
+                <span className="text-slate-400 ml-2">MXN/mes</span>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-secondary/20 flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">Mensajes ilimitados</span>
+                  <Check className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Mensajes ilimitados</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-secondary/20 flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">Todas las funciones</span>
+                  <Check className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Todas las funciones</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-secondary/20 flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">Gerente de cuenta dedicado</span>
+                  <Check className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Personalización completa</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="inline-block w-5 h-5 rounded-full bg-secondary/20 flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">Personalización completa</span>
+                  <Check className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
+                  <span className="text-slate-300">Soporte 24/7</span>
                 </li>
               </ul>
-              <Button className="w-full" variant="outline">
-                Contactar Ventas
-              </Button>
-            </motion.div>
+              <Link href="/onboarding">
+                <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                  Comenzar
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 pattern-hexagon opacity-20" />
-        <div className="absolute inset-0 gradient-radial-teal" />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <h2 className="text-gradient mb-6">
-              ¿Lista para Transformar tu Negocio?
-            </h2>
-            <p className="text-xl text-muted-foreground mb-10">
-              Únete a cientos de emprendedoras mexicanas que ya están usando SYNTHIA™ para crecer más rápido.
-            </p>
-            <Button 
-              size="lg" 
-              className="gradient-teal-purple text-white font-semibold text-xl px-12 py-8 glow-teal hover:scale-105 transition-transform duration-300"
-              onClick={() => window.location.href = '/onboarding'}
-            >
-              Comenzar Prueba Gratuita
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="py-12 border-t border-border">
+      <footer className="relative py-12 bg-slate-950 border-t border-slate-800">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-4">
-              <img src="/kupuri-logo.jpg" alt="Kupuri Media" className="h-10 w-auto rounded" />
-              <span className="text-muted-foreground">© 2026 Kupuri Media. Todos los derechos reservados.</span>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-3">
+              <img src="/kupuri-logo.png" alt="Kupuri Media Studios" className="h-10 w-auto" />
+              <div>
+                <p className="text-slate-400 text-sm">Desarrollado por</p>
+                <p className="text-white font-semibold">Kupuri Media Studios</p>
+              </div>
             </div>
-            <div className="flex gap-6 text-muted-foreground">
-              <a href="#" className="hover:text-primary transition-colors">Privacidad</a>
-              <a href="#" className="hover:text-primary transition-colors">Términos</a>
-              <a href="#" className="hover:text-primary transition-colors">Contacto</a>
+            <div className="text-center md:text-right">
+              <p className="text-slate-400 text-sm">
+                © 2026 SYNTHIA™. Todos los derechos reservados.
+              </p>
+              <p className="text-slate-500 text-xs mt-1">
+                Diseñado para emprendedoras mexicanas
+              </p>
             </div>
           </div>
         </div>
