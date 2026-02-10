@@ -17,7 +17,7 @@ A bilingual (ES/EN) lead generation landing page with AI-powered conversational 
 
 ```bash
 # Using Python 3
-cd synthisynthia-landing
+cd synynthia-landing
 python3 -m http.server 8080
 
 # Using Node.js
@@ -27,31 +27,105 @@ npx serve -p 8080
 http://localhost:8080
 ```
 
-### Deployment Options
+## Coolify Cloud Deployment
 
-#### Vercel
+### Prerequisites
+
+1. Coolify Cloud account: https://app.coolify.io
+2. GitHub repository pushed with this code
+3. Server "healthy-heron" connected to Coolify Cloud
+
+### Option 1: Using Shell Script (Recommended)
+
+```bash
+# Make script executable
+chmod +x deploy.sh
+
+# Deploy to Coolify Cloud
+./deploy.sh
+
+# Check status
+./deploy.sh --status
+```
+
+### Option 2: Using Python Script
+
+```bash
+# Deploy
+python deploy_coolify_cloud.py
+
+# Check status
+python deploy_coolify_cloud.py --status
+```
+
+### Option 3: Manual Setup in Coolify Cloud UI
+
+1. Go to https://app.coolify.io
+2. Create a new application:
+   - **Name**: synthia-landing
+   - **Build Pack**: nixpacks (or static)
+   - **GitHub Repo**: https://github.com/executiveusa/synthia-landing
+   - **Branch**: main
+   - **Exposed Port**: 8080
+   - **FQDN**: synthia-landing.31.220.58.212.sslip.io
+3. Add environment variables:
+   ```env
+   NODE_ENV=production
+   SUPABASE_URL=https://kbphngxqozmpfrbdzgca.supabase.co
+   SUPABASE_ANON_KEY=sbp_c2b4eb447e91484cb25989f08532a534d0267355
+   ```
+4. Click "Deploy"
+
+### Deploy from Coolify Cloud Dashboard
+
+1. Go to https://app.coolify.io
+2. Select application "synthia-landing"
+3. Click "Deploy Now" button
+4. Monitor deployment progress
+
+## Deployment Commands
+
+```bash
+# Push to GitHub first
+git add -A
+git commit -m "Update landing page"
+git push origin main
+
+# Then deploy
+./deploy.sh
+```
+
+## Deployment Output
+
+Once deployed, your site will be available at:
+
+- **URL**: http://synthia-landing.31.220.58.212.sslip.io
+- **Dashboard**: https://app.coolify.io/applications
+
+## Alternative Deployments
+
+### Vercel
 
 ```bash
 npm i -g vercel
 vercel deploy
 ```
 
-#### Netlify
+### Netlify
 
 ```bash
 npm i -g netlify-cli
 netlify deploy --prod
 ```
 
-#### Coolify
-
-See `../agent-zero-Fork/deploy_to_coolify.py`
-
 ## Project Structure
 
 ```
 synthia-landing/
 ├── index.html           # Main landing page
+├── deploy.sh            # Coolify Cloud deployment script
+├── deploy_coolify_cloud.py  # Python deployment script
+├── README.md            # This file
 ├── css/
 │   ├── main.css         # Design system, variables
 │   ├── hero.css         # Hero section styles
