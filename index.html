@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYNTHIA - Tu Co-Founder Digital con Autonomía IA. Construye, escala y genera ingresos mientras duermes.">
+    <title>SYNTHIA - Tu Co-Founder Digital</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="X-Frame-Options" content="DENY">
+    <meta name="X-Content-Type-Options" content="nosniff">
+    <meta name="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/forms.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body>
+    <!-- Neural Network Background -->
+    <canvas id="neural-network"></canvas>
+    
+    <!-- Ambient Particles -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-nav" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">SYNTHIA</span>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="lang-switch" role="group" aria-label="Selector de idioma">
+                    <button class="lang-btn active" data-lang="es" aria-label="Español">
+                        <span>ES</span>
+                    </button>
+                    <button class="lang-btn" data-lang="en" aria-label="English">
+                        <span>EN</span>
+                    </button>
+                </div>
+                
+                <a href="#lead-form" class="nav-cta" data-i18n="nav.cta">
+                    Comenzar Gratis
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Full Viewport Hero -->
+    <section class="hero full-viewport" role="main" aria-label="Hero principal">
+        <div class="hero-container">
+            <div class="hero-content">
+                <!-- Badge -->
+                <div class="hero-badge" data-i18n="hero.badge">
+                    <span class="pulse"></span>
+                    🚀 Liderando la Revolución IA 2025
+                </div>
+                
+                <!-- Headline -->
+                <h1 class="hero-headline" data-i18n="hero.headline">
+                    Tu Co-Founder Digital<br>
+                    <span class="gradient-text">con Autonomía IA</span>
+                </h1>
+                
+                <!-- Subheadline -->
+                <p class="hero-subheadline" data-i18n="hero.subheadline">
+                    Construye, escala y genera ingresos mientras duermes.<br>
+                    El único agente AI que recuerda, aprende y actúa por ti.
+                </p>
+                
+                <!-- Lead Capture Form -->
+                <form class="hero-form" id="lead-form" role="form" aria-label="Formulario de captura de leads">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <span class="input-icon">✉️</span>
+                            <input 
+                                type="email" 
+                                name="email" 
+                                id="lead-email"
+                                placeholder="tu@email.com" 
+                                required
+                                autocomplete="email"
+                                aria-label="Correo electrónico"
+                                data-i18n-placeholder="form.email"
+                            >
+                        </div>
+                        <button type="submit" class="neon-cta" aria-label="Comenzar gratis">
+                            <span data-i18n="cta.primary">Comenzar Gratis</span>
+                            <span class="cta-arrow">→</span>
+                        </button>
+                    </div>
+                    <p class="form-note" data-i18n="form.note">
+                        🔒 Sin spam. Tus datos están seguros.
+                    </p>
+                </form>
+                
+                <!-- Trust Badges -->
+                <div class="trust-badges">
+                    <span class="badge">🔒 SSL Secured</span>
+                    <span class="badge">⭐ 10K+ Usuarios</span>
+                    <span class="badge">⚡ <50ms Respuesta</span>
+                    <span class="badge">🏆 Awwwards Winner</span>
+                </div>
+                
+                <!-- Live Agent Ticker -->
+                <div class="agent-ticker">
+                    <span class="pulse live"></span>
+                    <span id="agent-count" data-i18n="agent.live">🤖 3 Agentes activos ahora</span>
+                </div>
+            </div>
+            
+            <!-- Hero Visual -->
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="card-header">
+                        <span class="card-dot"></span>
+                        <span class="card-dot"></span>
+                        <span class="card-dot"></span>
+                    </div>
+                    <div class="card-content">
+                        <div class="code-line">
+                            <span class="keyword">const</span> 
+                            <span class="variable">synthia</span> = 
+                            <span class="function">await</span> 
+                            <span class="method">autopilot</span>();
+                        </div>
+                        <div class="code-line comment">// Revenue: +247% 📈</div>
+                        <div class="code-line comment">// Leads: +189% 🎯</div>
+                        <div class="code-line success">✅ Autonomous scaling...</div>
+                    </div>
+                </div>
+                
+                <!-- Floating Elements -->
+                <div class="floating-card card-1">
+                    <span class="card-icon">💰</span>
+                    <span class="card-value">$47,832</span>
+                    <span class="card-label">Ingresos Mensuales</span>
+                </div>
+                <div class="floating-card card-2">
+                    <span class="card-icon">🎯</span>
+                    <span class="card-value">2,847</span>
+                    <span class="card-label">Leads Capturados</span>
+                </div>
+                <div class="floating-card card-3">
+                    <span class="card-icon">⚡</span>
+                    <span class="card-value">99.9%</span>
+                    <span class="card-label">Uptime</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <span data-i18n="scroll.indicator">Desliza para más</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features" aria-label="Características">
+        <div class="features-container">
+            <h2 class="section-title" data-i18n="features.title">
+                ¿Por qué SYNTHIA?
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🧠</span>
+                    <h3 data-i18n="features.1.title">Memoria Perfecta</h3>
+                    <p data-i18n="features.1.desc">Nunca olvida una conversación. Cada interacción construye sobre la anterior.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3 data-i18n="features.2.title">Velocidad IA</h3>
+                    <p data-i18n="features.2.desc">Respuestas en menos de 50ms. Conversaciones naturales instantáneas.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔒</span>
+                    <h3 data-i18n="features.3.title">Seguridad Enterprise</h3>
+                    <p data-i18n="features.3.desc">Cifrado AES-256. Tus datos nunca salen de tu control.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🌐</span>
+                    <h3 data-i18n="features.4.title">Bilingüe Nativo</h3>
+                    <p data-i18n="features.4.desc">ES/EN automático. Habla con tus clientes en su idioma.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chat-widget" role="complementary" aria-label="Chat con SYNTHIA">
+        <button class="chat-trigger" onclick="toggleChat()" aria-label="Abrir chat">
+            <span class="chat-icon">💬</span>
+            <span class="chat-badge hidden" id="chat-badge">1</span>
+        </button>
+        
+        <div class="chat-window hidden" id="chat-window">
+            <header class="chat-header">
+                <div class="chat-header-info">
+                    <span class="chat-avatar">🧠</span>
+                    <div>
+                        <strong>SYNTHIA</strong>
+                        <small data-i18n="chat.status">En línea</small>
+                    </div>
+                </div>
+                <button class="chat-close" onclick="toggleChat()" aria-label="Cerrar chat">✕</button>
+            </header>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">
+                    <span class="message-avatar">🧠</span>
+                    <div class="message-content">
+                        <p data-i18n="chat.greeting">¡Hola! Soy SYNTHIA. ¿Cómo puedo ayudarte hoy?</p>
+                        <span class="message-time"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <form class="chat-input" id="chat-form" role="form">
+                <input 
+                    type="text" 
+                    id="chat-input" 
+                    placeholder="Escribe tu mensaje..." 
+                    autocomplete="off"
+                    aria-label="Mensaje"
+                >
+                <button type="submit" aria-label="Enviar mensaje">
+                    <span>➤</span>
+                </button>
+            </form>
+            
+            <div class="chat-footer">
+                <small data-i18n="chat.footer">CO-FOUNDER Philosophy: Revenue Above All</small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/i18n.js"></script>
+    <script src="js/lead-capture.js"></script>
+    <script src="js/chat-widget.js"></script>
+    <script src="js/memory.js"></script>
+    <script src="js/neural-network.js"></script>
+    <script src="js/cofounder-brain.js"></script>
+</body>
+</html>
