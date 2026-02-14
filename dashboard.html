@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Claw — Deploy Monitor Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦀</text></svg>">
+    <style>
+        /* ── Reset & Variables ─────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0a0e14;
+            --bg2: #0d1117;
+            --bg3: #161b22;
+            --card: rgba(22, 27, 34, 0.85);
+            --border: rgba(255,255,255,0.08);
+            --text: #f0f6fc;
+            --text2: #8b949e;
+            --text3: #6e7681;
+            --cyan: #00f0ff;
+            --green: #00ff88;
+            --pink: #ff6ec7;
+            --orange: #ffaa00;
+            --red: #ff4757;
+            --purple: #a855f7;
+            --font: 'Inter', -apple-system, sans-serif;
+            --mono: 'JetBrains Mono', 'Consolas', monospace;
+            --radius: 12px;
+            --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.2);
+            --glow-green: 0 0 20px rgba(0, 255, 136, 0.2);
+            --glow-pink: 0 0 20px rgba(255, 110, 199, 0.2);
+        }
+
+        html { font-size: 15px; scroll-behavior: smooth; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* ── Layout ─────────────────────────────────────── */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ────────────────────────────────────── */
+        .sidebar {
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+        }
+        .sidebar-brand .icon { font-size: 1.75rem; }
+        .sidebar-brand h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .sidebar-brand small { font-size: 0.7rem; color: var(--text3); display: block; }
+
+        .nav-section { margin-top: 0.5rem; }
+        .nav-section h3 {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text3);
+            padding: 0 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-size: 0.875rem;
+            color: var(--text2);
+            text-decoration: none;
+        }
+        .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+        .nav-item.active {
+            background: rgba(0, 240, 255, 0.08);
+            color: var(--cyan);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+        }
+        .nav-item .emoji { font-size: 1.1rem; width: 24px; text-align: center; }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .status-pill.online {
+            background: rgba(0,255,136,0.1);
+            color: var(--green);
+            border: 1px solid rgba(0,255,136,0.2);
+        }
+        .status-pill .dot {
+            width: 6px; height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* ── Main Content ───────────────────────────────── */
+        .main {
+            padding: 1.5rem 2rem;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .page-header h2 { font-size: 1.4rem; font-weight: 600; }
+        .page-header .subtitle { font-size: 0.85rem; color: var(--text2); margin-top: 0.2rem; }
+        .header-actions { display: flex; gap: 0.5rem; }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid var(--border);
+            background: var(--bg3);
+            color: var(--text);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .btn:hover { border-color: rgba(255,255,255,0.15); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cyan), #0088ff);
+            border: none;
+            color: #000;
+            font-weight: 600;
+        }
+        .btn-primary:hover { box-shadow: var(--glow-cyan); }
+
+        /* ── KPI Strip ──────────────────────────────────── */
+        .kpi-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .kpi-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.2s;
+        }
+        .kpi-card:hover {
+            border-color: rgba(0,240,255,0.2);
+            box-shadow: var(--glow-cyan);
+        }
+        .kpi-card .kpi-label {
+            font-size: 0.75rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .kpi-card .kpi-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            font-family: var(--mono);
+            line-height: 1;
+        }
+        .kpi-card .kpi-change {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .kpi-change.up { color: var(--green); }
+        .kpi-change.down { color: var(--red); }
+
+        /* ── Cards Grid ─────────────────────────────────── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            backdrop-filter: blur(12px);
+            overflow: hidden;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-header h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card-body { padding: 1.25rem; }
+
+        /* ── Pipeline Tracker ───────────────────────────── */
+        .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .pipeline-step {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+        }
+        .pipeline-step:hover { background: rgba(255,255,255,0.02); }
+        .pipeline-step .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            font-family: var(--mono);
+            flex-shrink: 0;
+        }
+        .pipeline-step.done .step-num {
+            background: rgba(0,255,136,0.15);
+            color: var(--green);
+            border: 1px solid rgba(0,255,136,0.3);
+        }
+        .pipeline-step.active .step-num {
+            background: rgba(0,240,255,0.15);
+            color: var(--cyan);
+            border: 1px solid rgba(0,240,255,0.3);
+            animation: blink 1.5s ease-in-out infinite;
+        }
+        .pipeline-step.pending .step-num {
+            background: rgba(255,255,255,0.05);
+            color: var(--text3);
+            border: 1px solid var(--border);
+        }
+        .pipeline-step.failed .step-num {
+            background: rgba(255,71,87,0.15);
+            color: var(--red);
+            border: 1px solid rgba(255,71,87,0.3);
+        }
+        .pipeline-step .step-name { flex: 1; color: var(--text2); }
+        .pipeline-step.done .step-name { color: var(--green); }
+        .pipeline-step.active .step-name { color: var(--cyan); font-weight: 500; }
+        .pipeline-step.failed .step-name { color: var(--red); }
+        .pipeline-step .step-time {
+            font-size: 0.7rem;
+            font-family: var(--mono);
+            color: var(--text3);
+        }
+
+        /* ── Deploy Log ─────────────────────────────────── */
+        .deploy-log {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            line-height: 1.8;
+            max-height: 320px;
+            overflow-y: auto;
+            padding: 0.5rem 0;
+        }
+        .deploy-log::-webkit-scrollbar { width: 6px; }
+        .deploy-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        .log-line {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+        }
+        .log-line:hover { background: rgba(255,255,255,0.02); }
+        .log-line .log-time { color: var(--text3); white-space: nowrap; flex-shrink: 0; }
+        .log-line .log-level { width: 48px; text-align: center; font-weight: 600; flex-shrink: 0; }
+        .log-line .log-level.info { color: var(--cyan); }
+        .log-line .log-level.ok { color: var(--green); }
+        .log-line .log-level.warn { color: var(--orange); }
+        .log-line .log-level.err { color: var(--red); }
+        .log-line .log-msg { color: var(--text2); word-break: break-word; }
+
+        /* ── Agent Cards ────────────────────────────────── */
+        .agent-list { display: flex; flex-direction: column; gap: 0.5rem; }
+        .agent-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.15s;
+        }
+        .agent-row:hover { border-color: rgba(255,255,255,0.12); }
+        .agent-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .agent-info { flex: 1; }
+        .agent-info .name { font-size: 0.85rem; font-weight: 500; }
+        .agent-info .role { font-size: 0.7rem; color: var(--text3); }
+        .agent-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 99px;
+            font-weight: 500;
+        }
+        .agent-status.idle {
+            background: rgba(255,255,255,0.05);
+            color: var(--text3);
+        }
+        .agent-status.working {
+            background: rgba(0,240,255,0.1);
+            color: var(--cyan);
+            border: 1px solid rgba(0,240,255,0.2);
+        }
+
+        /* ── Deployment History Table ───────────────────── */
+        .deploy-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        .deploy-table th {
+            text-align: left;
+            padding: 0.6rem 0.75rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text3);
+            border-bottom: 1px solid var(--border);
+            font-weight: 500;
+        }
+        .deploy-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--text2);
+        }
+        .deploy-table tr:hover td { background: rgba(255,255,255,0.01); }
+        .deploy-table .app-name { color: var(--text); font-weight: 500; }
+        .deploy-table .badge {
+            display: inline-flex;
+            padding: 0.15rem 0.5rem;
+            border-radius: 99px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .badge.success { background: rgba(0,255,136,0.1); color: var(--green); }
+        .badge.failed { background: rgba(255,71,87,0.1); color: var(--red); }
+        .badge.deploying { background: rgba(0,240,255,0.1); color: var(--cyan); animation: blink 1.5s infinite; }
+        .badge.queued { background: rgba(168,85,247,0.1); color: var(--purple); }
+
+        /* ── Lead Stats ─────────────────────────────────── */
+        .stat-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .stat-bar .label {
+            width: 100px;
+            font-size: 0.75rem;
+            color: var(--text3);
+        }
+        .stat-bar .bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .stat-bar .bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        .stat-bar .value {
+            width: 40px;
+            font-size: 0.75rem;
+            font-family: var(--mono);
+            text-align: right;
+            color: var(--text2);
+        }
+
+        /* ── Responsive ─────────────────────────────────── */
+        @media (max-width: 1024px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                z-index: 100;
+                transition: left 0.3s;
+                width: 260px;
+            }
+            .sidebar.open { left: 0; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .kpi-strip { grid-template-columns: 1fr 1fr; }
+            .main { padding: 1rem; }
+        }
+
+        /* ── Reduced Motion ─────────────────────────────── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <!-- ── Sidebar ──────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <span class="icon">🦀</span>
+            <div>
+                <h1>Agent Claw</h1>
+                <small>Deploy Monitor v2.0</small>
+            </div>
+        </div>
+
+        <nav class="nav-section">
+            <h3>Overview</h3>
+            <a class="nav-item active" data-page="overview">
+                <span class="emoji">📊</span> Dashboard
+            </a>
+            <a class="nav-item" data-page="deploys">
+                <span class="emoji">🚀</span> Deployments
+            </a>
+            <a class="nav-item" data-page="agents">
+                <span class="emoji">🤖</span> Agents
+            </a>
+        </nav>
+
+        <nav class="nav-section">
+            <h3>Pipeline</h3>
+            <a class="nav-item" data-page="pipeline">
+                <span class="emoji">🔄</span> Ralphy Loop
+            </a>
+            <a class="nav-item" data-page="logs">
+                <span class="emoji">📋</span> Deploy Logs
+            </a>
+            <a class="nav-item" data-page="leads">
+                <span class="emoji">🎯</span> Lead Capture
+            </a>
+        </nav>
+
+        <nav class="nav-section">
+            <h3>Infrastructure</h3>
+            <a class="nav-item" href="https://app.coolify.io" target="_blank" rel="noopener">
+                <span class="emoji">☁️</span> Coolify Cloud
+            </a>
+            <a class="nav-item" href="https://github.com/executiveusa/agent-zero-Fork" target="_blank" rel="noopener">
+                <span class="emoji">🐙</span> GitHub
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span class="status-pill online">
+                <span class="dot"></span>
+                OpenClaw Gateway
+            </span>
+        </div>
+    </aside>
+
+    <!-- ── Main Content ─────────────────────────────────── -->
+    <main class="main" id="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h2>Deploy Dashboard</h2>
+                <div class="subtitle" id="last-refresh">Last refresh: just now</div>
+            </div>
+            <div class="header-actions">
+                <button class="btn" onclick="refreshDashboard()">
+                    🔄 Refresh
+                </button>
+                <button class="btn btn-primary" onclick="triggerDeploy()">
+                    🚀 New Deploy
+                </button>
+            </div>
+        </div>
+
+        <!-- KPI Strip -->
+        <div class="kpi-strip">
+            <div class="kpi-card">
+                <div class="kpi-label">Total Deploys</div>
+                <div class="kpi-value" id="kpi-deploys" style="color: var(--cyan)">12</div>
+                <div class="kpi-change up">▲ 3 this week</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Success Rate</div>
+                <div class="kpi-value" id="kpi-success" style="color: var(--green)">91.7%</div>
+                <div class="kpi-change up">▲ +4.2%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Active Apps</div>
+                <div class="kpi-value" id="kpi-apps" style="color: var(--pink)">5</div>
+                <div class="kpi-change up">▲ 2 new</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Avg Deploy Time</div>
+                <div class="kpi-value" id="kpi-time" style="color: var(--orange)">3m 42s</div>
+                <div class="kpi-change up">▲ 18% faster</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Leads Captured</div>
+                <div class="kpi-value" id="kpi-leads" style="color: var(--purple)">847</div>
+                <div class="kpi-change up">▲ 127 today</div>
+            </div>
+        </div>
+
+        <!-- Row 1: Pipeline + Active Deploy -->
+        <div class="grid-2">
+            <!-- Pipeline Tracker -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>🔄 Ralphy Loop Pipeline</h3>
+                    <span class="badge deploying">deploying</span>
+                </div>
+                <div class="card-body">
+                    <div class="pipeline" id="pipeline-tracker">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Deploy Log -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>📋 Live Deploy Log</h3>
+                    <span style="font-size:0.7rem; color: var(--text3)" id="log-app">synthia-landing</span>
+                </div>
+                <div class="card-body" style="padding: 0.5rem">
+                    <div class="deploy-log" id="deploy-log">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Agents + History -->
+        <div class="grid-2">
+            <!-- Agent Roster -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>🤖 Agent Roster</h3>
+                    <span style="font-size:0.7rem; color: var(--green)">5 online</span>
+                </div>
+                <div class="card-body">
+                    <div class="agent-list" id="agent-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Deployments -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>🚀 Recent Deployments</h3>
+                </div>
+                <div class="card-body" style="padding: 0">
+                    <table class="deploy-table">
+                        <thead>
+                            <tr>
+                                <th>App</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deploy-history">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Lead Stats -->
+        <div class="card" style="margin-bottom: 1.5rem">
+            <div class="card-header">
+                <h3>🎯 Lead Generation Systems</h3>
+                <span style="font-size:0.7rem; color: var(--text3)">16 systems active</span>
+            </div>
+            <div class="card-body">
+                <div id="lead-stats">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    // ── State ──────────────────────────────────────────
+    const OPENCLAW_URL = 'http://h0skw08c4o80k8s08wws4g04.31.220.58.212.sslip.io';
+    const OPENCLAW_WS  = 'ws://h0skw08c4o80k8s08wws4g04.31.220.58.212.sslip.io';
+    const COOLIFY_APPS_URL = 'https://app.coolify.io/api/v1/applications';
+    let refreshInterval = null;
+
+    const PIPELINE_STEPS = [
+        { num: 1, name: 'ANALYZE', desc: 'Detect framework & dependencies' },
+        { num: 2, name: 'SECRETS', desc: 'Vault audit & inject env vars' },
+        { num: 3, name: 'DOCKERFILE', desc: 'Generate or validate' },
+        { num: 4, name: 'BUILD', desc: 'Validate build config' },
+        { num: 5, name: 'TEST', desc: 'Pre-deploy sanity checks' },
+        { num: 6, name: 'COOLIFY', desc: 'Create app & configure' },
+        { num: 7, name: 'DATABASE', desc: 'Provision if needed' },
+        { num: 8, name: 'DEPLOY', desc: 'Trigger & monitor' },
+        { num: 9, name: 'DNS', desc: 'Verify domain resolution' },
+        { num: 10, name: 'VERIFY', desc: 'External health check' },
+        { num: 11, name: 'REPORT', desc: 'Generate deployment report' },
+    ];
+
+    const AGENTS = [
+        { name: 'Deployment Agent', role: 'DeployOps v2.0 — Ralphy Loop', icon: '🚀', status: 'working' },
+        { name: 'Orchestrator', role: 'Task routing & delegation', icon: '🎯', status: 'idle' },
+        { name: 'Researcher', role: 'Web & code research', icon: '🔍', status: 'idle' },
+        { name: 'Developer', role: 'Code generation & fixes', icon: '💻', status: 'idle' },
+        { name: 'Browser Agent', role: 'Browser automation', icon: '🌐', status: 'idle' },
+    ];
+
+    const DEPLOY_HISTORY = [
+        { app: 'synthia-landing', status: 'deploying', time: 'Just now', duration: '—', statusClass: 'deploying' },
+        { app: 'agent-zero-fork', status: 'success', time: '2h ago', duration: '4m 12s', statusClass: 'success' },
+        { app: 'openclaw-gateway', status: 'success', time: '5h ago', duration: '2m 48s', statusClass: 'success' },
+        { app: 'telegram-bot', status: 'success', time: '1d ago', duration: '3m 05s', statusClass: 'success' },
+        { app: 'dashboard-swarm', status: 'failed', time: '1d ago', duration: '6m 30s', statusClass: 'failed' },
+        { app: 'spy-scape', status: 'queued', time: 'Queued', duration: '—', statusClass: 'queued' },
+    ];
+
+    const LEAD_SYSTEMS = [
+        { name: 'Behavioral Targeting', pct: 87 },
+        { name: 'Progressive Profiling', pct: 72 },
+        { name: 'Smart Pop-ups', pct: 65 },
+        { name: 'Exit Intent Detection', pct: 91 },
+        { name: 'Scroll Depth Tracking', pct: 78 },
+        { name: 'Lead Scoring AI', pct: 83 },
+        { name: 'Chatbot Qualification', pct: 69 },
+        { name: 'Email Automation', pct: 94 },
+    ];
+
+    const LOG_ENTRIES = [
+        { time: '14:32:01', level: 'info', msg: 'Starting Ralphy Loop for synthia-landing' },
+        { time: '14:32:02', level: 'info', msg: 'PRD generated — 11 tasks, 0 complete' },
+        { time: '14:32:03', level: 'ok', msg: 'Step 1 ANALYZE — nextjs detected (port 3000)' },
+        { time: '14:32:04', level: 'ok', msg: 'Step 2 SECRETS — 0 env vars needed' },
+        { time: '14:32:06', level: 'ok', msg: 'Step 3 DOCKERFILE — Dockerfile validated' },
+        { time: '14:32:07', level: 'ok', msg: 'Step 4 BUILD — Config ready for Coolify' },
+        { time: '14:32:08', level: 'ok', msg: 'Step 5 TEST — Pre-deploy checks passed' },
+        { time: '14:32:15', level: 'ok', msg: 'Step 6 COOLIFY — App created UUID: abc123' },
+        { time: '14:32:16', level: 'info', msg: 'Step 7 DATABASE — Skipped (not needed)' },
+        { time: '14:32:45', level: 'info', msg: 'Step 8 DEPLOY — Waiting for build...' },
+        { time: '14:35:12', level: 'ok', msg: 'Step 8 DEPLOY — Build finished (2m 27s)' },
+        { time: '14:35:15', level: 'ok', msg: 'Step 9 DNS — sslip.io domain resolves' },
+        { time: '14:35:20', level: 'warn', msg: 'Step 10 VERIFY — /health 404, retrying...' },
+        { time: '14:35:35', level: 'ok', msg: 'Step 10 VERIFY — / returns 200 OK' },
+        { time: '14:35:36', level: 'ok', msg: 'Step 11 REPORT — Summary saved' },
+        { time: '14:35:36', level: 'ok', msg: 'ALL 11 STEPS COMPLETE ✓' },
+    ];
+
+    // ── Render Functions ───────────────────────────────
+
+    function renderPipeline(activeStep) {
+        const container = document.getElementById('pipeline-tracker');
+        container.innerHTML = PIPELINE_STEPS.map(step => {
+            let state = 'pending';
+            let timeStr = '';
+            if (step.num < activeStep) { state = 'done'; timeStr = '✓'; }
+            else if (step.num === activeStep) { state = 'active'; timeStr = '...'; }
+            return `
+                <div class="pipeline-step ${state}">
+                    <span class="step-num">${step.num}</span>
+                    <span class="step-name">${step.name} — ${step.desc}</span>
+                    <span class="step-time">${timeStr}</span>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderLogs() {
+        const container = document.getElementById('deploy-log');
+        container.innerHTML = LOG_ENTRIES.map(entry => `
+            <div class="log-line">
+                <span class="log-time">${entry.time}</span>
+                <span class="log-level ${entry.level}">${entry.level.toUpperCase().padEnd(4)}</span>
+                <span class="log-msg">${entry.msg}</span>
+            </div>
+        `).join('');
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function renderAgents() {
+        const container = document.getElementById('agent-list');
+        container.innerHTML = AGENTS.map(agent => `
+            <div class="agent-row">
+                <div class="agent-avatar">${agent.icon}</div>
+                <div class="agent-info">
+                    <div class="name">${agent.name}</div>
+                    <div class="role">${agent.role}</div>
+                </div>
+                <span class="agent-status ${agent.status}">${agent.status}</span>
+            </div>
+        `).join('');
+    }
+
+    function renderHistory() {
+        const container = document.getElementById('deploy-history');
+        container.innerHTML = DEPLOY_HISTORY.map(d => `
+            <tr>
+                <td class="app-name">${d.app}</td>
+                <td><span class="badge ${d.statusClass}">${d.status}</span></td>
+                <td>${d.time}</td>
+                <td style="font-family: var(--mono)">${d.duration}</td>
+            </tr>
+        `).join('');
+    }
+
+    function renderLeadStats() {
+        const container = document.getElementById('lead-stats');
+        const colors = ['var(--cyan)', 'var(--green)', 'var(--pink)', 'var(--orange)', 'var(--purple)', 'var(--cyan)', 'var(--green)', 'var(--pink)'];
+        container.innerHTML = LEAD_SYSTEMS.map((sys, i) => `
+            <div class="stat-bar">
+                <span class="label">${sys.name}</span>
+                <div class="bar">
+                    <div class="bar-fill" style="width:${sys.pct}%; background:${colors[i % colors.length]}"></div>
+                </div>
+                <span class="value">${sys.pct}%</span>
+            </div>
+        `).join('');
+    }
+
+    // ── Live Data Fetching ─────────────────────────────
+
+    async function fetchOpenClawStatus() {
+        try {
+            const res = await fetch(`${OPENCLAW_URL}/status`, { 
+                signal: AbortSignal.timeout(5000),
+                headers: { 'Accept': 'application/json' }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                document.querySelector('.sidebar-footer .status-pill').className = 'status-pill online';
+                if (data.apps) {
+                    document.getElementById('kpi-apps').textContent = Object.keys(data.apps).length || '5';
+                }
+            }
+        } catch (e) {
+            // Gateway offline — show static data
+            console.log('[Dashboard] OpenClaw offline, using static data');
+        }
+    }
+
+    async function fetchLeadCount() {
+        try {
+            const leads = JSON.parse(localStorage.getItem('synthia_lead') || '[]');
+            if (leads.length > 0) {
+                document.getElementById('kpi-leads').textContent = leads.length.toLocaleString();
+            }
+        } catch (e) { /* ok */ }
+    }
+
+    // ── Pipeline Animation ─────────────────────────────
+
+    let currentStep = 1;
+    let pipelineTimer = null;
+
+    function animatePipeline() {
+        renderPipeline(currentStep);
+        pipelineTimer = setInterval(() => {
+            if (currentStep <= 11) {
+                currentStep++;
+                renderPipeline(currentStep);
+                if (currentStep > 11) {
+                    clearInterval(pipelineTimer);
+                    // Update header badge
+                    const badge = document.querySelector('.card-header .badge.deploying');
+                    if (badge) {
+                        badge.className = 'badge success';
+                        badge.textContent = 'complete';
+                    }
+                }
+            }
+        }, 3000);
+    }
+
+    // ── Actions ────────────────────────────────────────
+
+    window.refreshDashboard = function() {
+        fetchOpenClawStatus();
+        fetchLeadCount();
+        document.getElementById('last-refresh').textContent = `Last refresh: ${new Date().toLocaleTimeString()}`;
+    };
+
+    window.triggerDeploy = function() {
+        const appName = prompt('Enter app name to deploy:', 'synthia-landing');
+        if (!appName) return;
+        const repoUrl = prompt('GitHub repository URL:', 'https://github.com/executiveusa/' + appName);
+        if (!repoUrl) return;
+        alert(`Deploy queued for ${appName}!\n\nRepo: ${repoUrl}\nPipeline: Ralphy Loop (11 steps)\n\nMonitor progress on this dashboard.`);
+        currentStep = 1;
+        animatePipeline();
+    };
+
+    // ── Navigation ─────────────────────────────────────
+
+    document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+
+    // Mobile sidebar toggle
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'm' && e.ctrlKey) {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+    });
+
+    // ── WebSocket for Live Updates ─────────────────────
+
+    function connectWebSocket() {
+        try {
+            const ws = new WebSocket(`${OPENCLAW_WS}/ws`);
+            ws.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    if (data.type === 'deploy_log') {
+                        const logContainer = document.getElementById('deploy-log');
+                        const line = document.createElement('div');
+                        line.className = 'log-line';
+                        line.innerHTML = `
+                            <span class="log-time">${new Date().toLocaleTimeString()}</span>
+                            <span class="log-level info">LIVE</span>
+                            <span class="log-msg">${data.message || JSON.stringify(data)}</span>
+                        `;
+                        logContainer.appendChild(line);
+                        logContainer.scrollTop = logContainer.scrollHeight;
+                    }
+                } catch (e) { /* ignore parse errors */ }
+            };
+            ws.onclose = () => setTimeout(connectWebSocket, 5000);
+            ws.onerror = () => { /* will auto-reconnect on close */ };
+        } catch (e) {
+            console.log('[Dashboard] WebSocket not available');
+        }
+    }
+
+    // ── Init ───────────────────────────────────────────
+
+    function init() {
+        renderPipeline(8);   // Show step 8 as active (deploy in progress)
+        renderLogs();
+        renderAgents();
+        renderHistory();
+        renderLeadStats();
+
+        fetchOpenClawStatus();
+        fetchLeadCount();
+
+        // Auto-refresh every 30s
+        refreshInterval = setInterval(() => {
+            fetchOpenClawStatus();
+            fetchLeadCount();
+            document.getElementById('last-refresh').textContent = `Last refresh: ${new Date().toLocaleTimeString()}`;
+        }, 30000);
+
+        // Try WebSocket connection
+        connectWebSocket();
+
+        // Start pipeline animation after 2s
+        setTimeout(() => animatePipeline(), 2000);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

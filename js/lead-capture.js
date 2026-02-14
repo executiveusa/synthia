@@ -199,8 +199,7 @@
      * Detect lead source
      * @returns {string}
      */
-    {
-        // Check function detectSource() URL parameters
+    function detectSource() {
         const urlParams = new URLSearchParams(window.location.search);
         
         if (urlParams.has('utm_source')) return urlParams.get('utm_source');
