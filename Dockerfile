@@ -5,6 +5,7 @@ RUN rm -rf /usr/share/nginx/html/*
 
 # Copy static site
 COPY index.html /usr/share/nginx/html/
+COPY dashboard.html /usr/share/nginx/html/
 COPY css/ /usr/share/nginx/html/css/
 COPY js/ /usr/share/nginx/html/js/
 
