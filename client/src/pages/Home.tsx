@@ -73,6 +73,15 @@ export default function Home() {
                 <Sparkles className="ml-2 h-5 w-5" />
               </Button>
             </Link>
+            <Link href="/control">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-cyan-400/50 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400 px-8 py-6 text-lg font-semibold rounded-full transition-all duration-300"
+              >
+                Panel de control
+              </Button>
+            </Link>
             <Link href="/skills">
               <Button 
                 size="lg" 

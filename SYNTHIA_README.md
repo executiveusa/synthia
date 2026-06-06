@@ -139,8 +139,19 @@ All environment variables are automatically injected by Manus:
 - `DATABASE_URL` - MySQL connection string
 - `JWT_SECRET` - Session signing secret
 - `VITE_APP_ID` - Manus OAuth app ID
+- `VITE_OAUTH_PORTAL_URL` - OAuth portal base URL for client login
 - `OWNER_OPEN_ID` - Owner's Manus ID (auto-admin)
 - `BUILT_IN_FORGE_API_KEY` - Manus services API key
+- `BUILT_IN_FORGE_API_URL` - Manus services API base URL
+- `OAUTH_SERVER_URL` - Manus OAuth backend URL
+- `OPEN_ROUTER_API` - OpenRouter key for sphere chat
+- `CREEM_API_KEY` - Creem checkout API key
+- `CREEM_TIER_STARTER_ID` - Creem product ID for starter tier
+- `CREEM_TIER_PRO_ID` - Creem product ID for pro tier
+- `CREEM_TIER_ELITE_ID` - Creem product ID for elite tier
+- `SUPABASE_URL` - Supabase base URL for health observation
+- `ELEVENLABS_API_KEY` - Voice provider key
+- `TWILIO_ACCOUNT_SID` - WhatsApp/telephony provider key
 
 ---
 
@@ -150,6 +161,7 @@ All environment variables are automatically injected by Manus:
 |-------|-------------|
 | `/` | Landing page with hero, features, pricing |
 | `/admin` | Admin dashboard (requires admin role) |
+| `/control` | Admin control panel alias (requires admin role) |
 | `/onboarding` | Client signup flow |
 | `/onboarding/pairing/:clientId` | QR code WhatsApp pairing |
 | `/onboarding/success` | Onboarding success page |

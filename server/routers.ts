@@ -7,6 +7,9 @@ import { z } from "zod";
 import * as db from "./db";
 import * as clawdbotManager from "./clawdbot-manager";
 import { notifyOwner } from "./_core/notification";
+import { spheresRouter } from './routers/spheres'
+import { heraldRouter } from './routers/herald'
+import { voiceRouter } from './routers/voice'
 
 // Admin-only procedure
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -91,7 +94,10 @@ export const appRouter = router({
   }),
 
   system: systemRouter,
-  
+  spheres: spheresRouter,
+  herald: heraldRouter,
+  voice: voiceRouter,
+
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
@@ -133,9 +139,7 @@ export const appRouter = router({
         businessDescription: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
-        // Check if email already exists
-        // TODO: Implement getClientByEmail
-        const existingClient = null; // await db.getClientByEmail(input.email);
+        const existingClient = await db.getClientByEmail(input.email);
         if (existingClient) {
           throw new TRPCError({ 
             code: 'CONFLICT', 
@@ -328,6 +332,50 @@ export const appRouter = router({
 
   // Payment Management
   payments: router({
+    // Public: list pricing tiers
+    tiers: publicProcedure.query(() => {
+      return [
+        { id: 'starter', name: 'INICIO', priceMXN: 1750, creem_id: process.env.CREEM_TIER_STARTER_ID ?? 'starter' },
+        { id: 'pro',     name: 'PRO',    priceMXN: 5300, creem_id: process.env.CREEM_TIER_PRO_ID ?? 'pro' },
+        { id: 'elite',   name: 'ÉLITE',  priceMXN: 14200, creem_id: process.env.CREEM_TIER_ELITE_ID ?? 'elite' },
+      ]
+    }),
+
+    // Public: create Creem checkout session
+    createCheckout: publicProcedure
+      .input(z.object({ tierId: z.enum(['starter', 'pro', 'elite']) }))
+      .mutation(async ({ input }) => {
+        const apiKey = process.env.CREEM_API_KEY
+        if (!apiKey) {
+          throw new Error('CREEM_API_KEY not configured')
+        }
+
+        const tiers = {
+          starter: { creem_id: process.env.CREEM_TIER_STARTER_ID ?? 'starter' },
+          pro:     { creem_id: process.env.CREEM_TIER_PRO_ID ?? 'pro' },
+          elite:   { creem_id: process.env.CREEM_TIER_ELITE_ID ?? 'elite' },
+        }
+        const tier = tiers[input.tierId]
+        const res = await fetch('https://api.creem.io/v1/checkouts', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            product_id: tier.creem_id,
+            success_url: 'https://getsynthia.vercel.app/welcome',
+            cancel_url: 'https://getsynthia.vercel.app',
+          }),
+        })
+        if (!res.ok) {
+          const errorBody = await res.text()
+          throw new Error(`Creem checkout failed: ${res.status} ${errorBody}`)
+        }
+        const data = await res.json() as { checkout_url?: string }
+        return { checkoutUrl: data.checkout_url ?? null }
+      }),
+
     // Get payments by client ID
     getByClientId: adminProcedure
       .input(z.object({ clientId: z.number() }))

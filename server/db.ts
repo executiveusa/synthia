@@ -260,6 +260,14 @@ export async function getClientById(id: number): Promise<Client | undefined> {
   return result.length > 0 ? result[0] : undefined;
 }
 
+export async function getClientByEmail(email: string): Promise<Client | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(clients).where(eq(clients.email, email)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
 export async function createClient(data: {
   businessName: string;
   ownerName: string;

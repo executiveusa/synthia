@@ -7,6 +7,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import cors from 'cors'
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -30,11 +31,55 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  app.use(cors({
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://kupurimedia.com',
+      'https://www.kupurimedia.com',
+      'https://getsynthia.vercel.app',
+      /\.vercel\.app$/,
+    ],
+    methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+    allowedHeaders: ['Content-Type','Authorization','x-api-key','x-trpc-source'],
+    credentials: true,
+  }))
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+
+  // Health endpoint — plain REST for Coolify + load balancers
+  app.get('/health', async (_req, res) => {
+    const checks: Record<string, string> = {
+      llm: 'ready',
+    }
+
+    const supabaseUrl = process.env.SUPABASE_URL
+
+    if (supabaseUrl) {
+      try {
+        const r = await fetch(`${supabaseUrl}/rest/v1/`, { signal: AbortSignal.timeout(2000) })
+        checks['supabase'] = r.status === 401 || r.status === 200 ? 'connected' : 'error'
+      } catch {
+        checks['supabase'] = 'error'
+      }
+    } else {
+      checks['supabase'] = 'unconfigured'
+    }
+
+    const allHealthy = Object.values(checks).every(v => v === 'connected' || v === 'ready')
+
+    res.status(allHealthy ? 200 : 206).json({
+      status: allHealthy ? 'ok' : 'degraded',
+      version: '1.0.0',
+      port: process.env.PORT ?? 4000,
+      timestamp: new Date().toISOString(),
+      services: checks,
+    })
+  })
+
   // tRPC API
   app.use(
     "/api/trpc",
